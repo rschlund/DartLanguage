@@ -1,35 +1,33 @@
 import 'dart:async';
 
-main() async{
-  getAJoke().then((value) => print(value))
+main(){
+
+  getAJoke("This joke comes when it's done").then((value) => print(value))
       .catchError((error) {
     print('Error');
   });
-  print('Another print statement.');
 
+  print('Asap print statement.');
+
+  waitforAsync();
+
+}
+
+Future<String> getAJoke(String message) {
+  return new Future<String>.delayed(new Duration(milliseconds: 10000),() {
+
+    //Do a long running task. E.g. Network Call.
+    //Return the result
+    return message;
+  });
+}
+
+void waitforAsync() async{
   try {
-    String result = await getslowJoke();
+    String result = await getAJoke("You'll have to wait for this joke");
     print(result);
   } catch(e){
     print(e);
   }
   print('Delayed print statement');
-}
-
-Future<String> getAJoke() {
-  return new Future<String>.delayed(new Duration(milliseconds: 5000),() {
-
-    //Do a long running task. E.g. Network Call.
-    //Return the result
-    return "This is a delayed joke";
-  });
-}
-
-Future<String> getslowJoke() {
-  return new Future<String>.delayed(new Duration(milliseconds: 2000),() {
-
-    //Do a long running task. E.g. Network Call.
-    //Return the result
-    return "This is a slow joke";
-  });
 }
